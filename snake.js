@@ -5,14 +5,16 @@ const snakeBody = [{x:10, y:11}];
 let newSegments = 0;
 
 
-export funtion update(){
+export function update(){
   addSegments();
   const inputDirection = getInputDirection();
-  for(let i = snakeBody.length -2; i >= 0; i--){
+  
+  for(let i = snakeBody.length - 2; i >= 0; i--){    
     console.log(snakeBody);
     snakeBody[i + 1] = { ...snakeBody[i] };
     console.log(snakeBody);   
   }
+  console.log("algo")
   console.log(snakeBody[0]);
   snakeBody[0].x += inputDirection.x
   snakeBody[0].y += inputDirection.y
@@ -20,7 +22,7 @@ export funtion update(){
 
 export function draw(gameBoard) {
 snakeBody.forEach((segment) => {
-    const snakeElement = document.createElement("div");
+    const snakeElement = document.createElement('div');
     snakeElement.style.gridRowStart = segment.y;
     snakeElement.style.gridColumnStart = segment.x;
     snakeElement.classList.add("snake");
@@ -33,11 +35,12 @@ export function expandSnake(amount) {
 }
 
 export function onSnake(position, { ignoreHead = false } = {}) {
-
   return snakeBody.some((segment, index) => {
-    if (ignoreHead && index === 0) return false;
+    if (ignoreHead && index === 0){ 
+      return false;
+     }
     return equalPositions(segment, position)
-  })
+  });
 }
 
 function equalPositions(pos1, pos2) {
@@ -51,11 +54,12 @@ function addSegments() {
   newSegments = 0
 };
 
-function addSegments() {
-  for (let i = 0; i < newSegments; i++) {
-    snakeBody.push({ ...snakeBody[snakeBody.length - 1] });
-  }
-  newSegments = 0
+export function getSnakeHead() {
+return snakeBody[0];
 };
+
+export function snakeIntersection() {
+return onSnake(snakeBody[0], { ignoreHead: true });
+}
 
 
